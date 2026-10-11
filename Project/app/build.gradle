@@ -22,6 +22,7 @@ dependencies {
     // This dependency is used by the application.
     implementation libs.guava
     implementation libs.lanterna
+    implementation libs.sqlite
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -34,6 +35,14 @@ java {
 application {
     // Define the main class for the application.
     mainClass = 'ChatClient'
+}
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += ['--enable-native-access=ALL-UNNAMED']
+}
+
+tasks.withType(Test).configureEach {
+    jvmArgs += ['--enable-native-access=ALL-UNNAMED']
 }
 
 tasks.register('runClient', JavaExec) {
@@ -51,3 +60,4 @@ tasks.register('runServer', JavaExec) {
     mainClass = 'ChatServer'
     standardInput = System.in
 }
+
